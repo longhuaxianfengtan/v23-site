@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>金骏寰宇资本 — 品牌横幅</title>
+<style>
+  :root {
+    --bg: #070b14;
+    --gold: #d4af37;
+    --gold-2: #f0d97a;
+    --muted: #8fa0b8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #05070d; }
+  .stage {
+    width: 100%;
+    max-width: 2000px;
+    margin: 0 auto;
+    aspect-ratio: 13 / 4;
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(1200px 540px at 50% 40%, rgba(212,175,55,.15), transparent 62%),
+      radial-gradient(760px 420px at 90% -12%, rgba(62,197,255,.08), transparent 60%),
+      radial-gradient(640px 400px at 4% 112%, rgba(212,175,55,.06), transparent 60%),
+      var(--bg);
+  }
+  /* 极淡网格，中央聚焦 */
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.028) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(1000px 520px at 50% 50%, #000 0%, transparent 78%);
+  }
+  /* 中央内容 */
+  .center {
+    position: absolute; inset: 0; z-index: 2;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .brand { display: flex; align-items: center; gap: 30px; }
+  .logo-wrap {
+    background: #fff; border-radius: 22px; padding: 10px; line-height: 0;
+    box-shadow: 0 12px 44px rgba(0,0,0,.5), 0 0 70px rgba(212,175,55,.22);
+  }
+  .logo-wrap img { height: 88px; width: auto; display: block; border-radius: 14px; }
+  .brand-txt { text-align: left; }
+  .brand-txt h1 {
+    font-size: 66px; font-weight: 800; letter-spacing: 8px; line-height: 1.1;
+    font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+    color: transparent;
+    background: linear-gradient(180deg, #f7e58c 0%, #d4af37 52%, #9d7c22 100%);
+    -webkit-background-clip: text; background-clip: text;
+    filter: drop-shadow(0 4px 26px rgba(212,175,55,.22));
+  }
+  .brand-txt .sub {
+    font-size: 16px; letter-spacing: 16px; color: var(--muted);
+    margin-top: 12px; padding-left: 8px; font-weight: 400;
+  }
+  /* 金色分隔线：连接左右，打破空洞 */
+  .divider {
+    display: flex; align-items: center; gap: 16px;
+    width: min(560px, 58%); margin: 34px 0 28px;
+  }
+  .divider::before, .divider::after {
+    content: ""; height: 1px; flex: 1;
+  }
+  .divider::before { background: linear-gradient(90deg, transparent, rgba(212,175,55,.55)); }
+  .divider::after { background: linear-gradient(90deg, rgba(212,175,55,.55), transparent); }
+  .divider .dot {
+    width: 7px; height: 7px; border-radius: 50%; flex: none;
+    background: var(--gold); box-shadow: 0 0 14px rgba(212,175,55,.85);
+  }
+  /* 胶囊标签条 */
+  .tagline {
+    display: inline-flex; align-items: center; gap: 16px;
+    border: 1px solid rgba(212,175,55,.42); border-radius: 999px;
+    padding: 11px 34px; font-size: 17px; letter-spacing: 2.5px;
+    color: #e8cf82; background: rgba(212,175,55,.045);
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+  }
+  .tagline .dot {
+    width: 7px; height: 7px; border-radius: 50%; flex: none;
+    background: var(--gold); box-shadow: 0 0 10px rgba(212,175,55,.9);
+  }
+  .tagline .sep { color: rgba(212,175,55,.38); }
+  /* 角落 K 线装饰，平衡左右 */
+  .deco { position: absolute; z-index: 1; opacity: .55; }
+  .deco.bl { left: 5.5%; bottom: 13%; }
+  .deco.br { right: 5.5%; bottom: 13%; }
+
+  /* 窄屏适配 */
+  @media (max-width: 900px) {
+    .brand-txt h1 { font-size: 40px; letter-spacing: 4px; }
+    .logo-wrap { border-radius: 16px; padding: 7px; }
+    .logo-wrap img { height: 54px; border-radius: 10px; }
+    .brand { gap: 18px; }
+    .brand-txt .sub { letter-spacing: 10px; font-size: 13px; }
+    .divider { margin: 22px 0 18px; }
+    .tagline { font-size: 13px; padding: 8px 20px; gap: 10px; letter-spacing: 1.5px; }
+    .deco { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="grid"></div>
+
+  <div class="center">
+    <div class="brand">
+      <div class="logo-wrap"><img src="assets/logo.png" alt="金骏寰宇资本"></div>
+      <div class="brand-txt">
+        <h1>金骏寰宇资本</h1>
+        <div class="sub">荣 誉 出 品</div>
+      </div>
+    </div>
+
+    <div class="divider"><span class="dot"></span></div>
+
+    <div class="tagline">
+      <span class="dot"></span>
+      AI 自适应交易引擎
+      <span class="sep">·</span>
+      黄金 + 外汇
+      <span class="sep">·</span>
+      7×24 小时
+    </div>
+  </div>
+
+  <!-- 角落装饰：上涨 K 线 -->
+  <svg class="deco bl" width="132" height="64" viewBox="0 0 132 64" fill="none">
+    <path d="M2 52 L30 38 L48 44 L70 20 L88 28 L126 4" stroke="rgba(212,175,55,.65)" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M126 4 L114 4 M126 4 L126 16" stroke="rgba(212,175,55,.65)" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="48" cy="44" r="3" fill="rgba(212,175,55,.65)"/>
+    <circle cx="88" cy="28" r="3" fill="rgba(212,175,55,.65)"/>
+  </svg>
+  <svg class="deco br" width="132" height="64" viewBox="0 0 132 64" fill="none" style="transform: scaleX(-1)">
+    <path d="M2 52 L30 38 L48 44 L70 20 L88 28 L126 4" stroke="rgba(62,197,255,.4)" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M126 4 L114 4 M126 4 L126 16" stroke="rgba(62,197,255,.4)" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="48" cy="44" r="3" fill="rgba(62,197,255,.4)"/>
+    <circle cx="88" cy="28" r="3" fill="rgba(62,197,255,.4)"/>
+  </svg>
+</div>
+
+</body>
+</html>

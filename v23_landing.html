@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>V23 智能进化交易系统 — 会自己变聪明的 AI 交易引擎</title>
+<style>
+  :root {
+    --bg: #0b0e14;
+    --bg2: #11151f;
+    --card: #151b28;
+    --line: #232c3d;
+    --gold: #d4af37;
+    --cyan: #38bdf8;
+    --green: #34d399;
+    --red: #f87171;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+    line-height: 1.7;
+  }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Hero ── */
+  .hero {
+    background: radial-gradient(1200px 500px at 70% -10%, rgba(56,189,248,.12), transparent 60%),
+                radial-gradient(800px 400px at 20% 0%, rgba(212,175,55,.08), transparent 55%),
+                var(--bg);
+    padding: 90px 0 70px;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+  }
+  .badge {
+    display: inline-block;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    border-radius: 999px;
+    padding: 4px 16px;
+    font-size: 13px;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+  }
+  .hero h1 { font-size: 44px; font-weight: 800; letter-spacing: 1px; }
+  .hero h1 .accent {
+    background: linear-gradient(90deg, var(--gold), var(--cyan));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero .sub { color: var(--muted); font-size: 18px; margin-top: 18px; max-width: 640px; margin-left: auto; margin-right: auto; }
+  .cta-row { margin-top: 34px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    padding: 13px 34px; border-radius: 10px; font-size: 16px; font-weight: 600;
+    text-decoration: none; display: inline-block; border: 1px solid transparent;
+  }
+  .btn-primary { background: linear-gradient(90deg, var(--gold), #e6c25a); color: #1a1405; }
+  .btn-ghost { border-color: var(--line); color: var(--text); background: var(--bg2); }
+  .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+  .hero .tiny { margin-top: 18px; color: #64748b; font-size: 12px; }
+
+  /* ── Sections ── */
+  section { padding: 72px 0; border-bottom: 1px solid var(--line); }
+  .sec-tag { color: var(--cyan); font-size: 13px; letter-spacing: 3px; font-weight: 700; }
+  h2 { font-size: 30px; margin: 10px 0 14px; font-weight: 800; }
+  .lead { color: var(--muted); font-size: 16px; max-width: 720px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-top: 36px; }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    padding: 26px; transition: border-color .2s;
+  }
+  .card:hover { border-color: var(--cyan); }
+  .card h3 { font-size: 18px; margin-bottom: 10px; }
+  .card p { color: var(--muted); font-size: 14.5px; }
+  .card .big { font-size: 34px; font-weight: 800; color: var(--green); line-height: 1.2; }
+  .card .big.gold { color: var(--gold); }
+  .card .big.cyan { color: var(--cyan); }
+
+  /* ── Evidence table ── */
+  table { width: 100%; border-collapse: collapse; margin-top: 32px; font-size: 14.5px; }
+  th, td { padding: 13px 14px; text-align: left; border-bottom: 1px solid var(--line); }
+  th { color: var(--muted); font-weight: 600; font-size: 13px; letter-spacing: .5px; }
+  td.num { font-variant-numeric: tabular-nums; font-weight: 600; }
+  .ok { color: var(--green); font-weight: 700; }
+  .warn { color: var(--gold); }
+  .note { margin-top: 14px; color: #64748b; font-size: 13px; }
+
+  /* ── Pipeline ── */
+  .steps { margin-top: 34px; counter-reset: step; }
+  .step { display: flex; gap: 18px; padding: 18px 0; border-bottom: 1px dashed var(--line); }
+  .step:last-child { border-bottom: none; }
+  .step .n {
+    counter-increment: step; flex: 0 0 40px; height: 40px; border-radius: 50%;
+    background: var(--bg2); border: 1px solid var(--gold); color: var(--gold);
+    display: flex; align-items: center; justify-content: center; font-weight: 800;
+  }
+  .step .n::before { content: counter(step); }
+  .step h3 { font-size: 17px; margin-bottom: 4px; }
+  .step p { color: var(--muted); font-size: 14.5px; }
+
+  /* ── Guards ── */
+  .guard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-top: 32px; }
+  .guard { background: var(--bg2); border: 1px solid var(--line); border-left: 3px solid var(--green); border-radius: 10px; padding: 18px 20px; }
+  .guard h4 { font-size: 15px; margin-bottom: 6px; }
+  .guard p { color: var(--muted); font-size: 13.5px; }
+
+  /* ── Pricing ── */
+  .pricing { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-top: 34px; }
+  .plan { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 30px; position: relative; }
+  .plan.hot { border-color: var(--gold); }
+  .plan .tag {
+    position: absolute; top: -13px; left: 24px; background: linear-gradient(90deg, var(--gold), #e6c25a);
+    color: #1a1405; font-size: 12px; font-weight: 700; padding: 3px 14px; border-radius: 999px;
+  }
+  .plan h3 { font-size: 17px; }
+  .plan .price { font-size: 36px; font-weight: 800; margin: 14px 0 4px; }
+  .plan .price span { font-size: 15px; color: var(--muted); font-weight: 400; }
+  .plan ul { list-style: none; margin-top: 16px; }
+  .plan li { padding: 7px 0; color: var(--muted); font-size: 14px; border-bottom: 1px dashed var(--line); }
+  .plan li::before { content: "✓ "; color: var(--green); font-weight: 700; }
+  .plan .btn { margin-top: 22px; width: 100%; text-align: center; }
+
+  /* ── Footer ── */
+  .disclaimer { padding: 48px 0 64px; }
+  .disclaimer p { color: #64748b; font-size: 12.5px; max-width: 820px; }
+  footer { padding: 28px 0 40px; text-align: center; color: #475569; font-size: 13px; }
+
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 30px; }
+    h2 { font-size: 24px; }
+    .hero { padding: 60px 0 48px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HERO ═══════════ -->
+<div class="hero">
+  <div class="wrap">
+    <span class="badge">AI 自适应交易引擎 · 11 品种 · 7×24 小时</span>
+    <h1>V23 <span class="accent">智能进化交易系统</span></h1>
+    <p class="sub">一套会自己变聪明的自动交易系统：看行情、自己决定买卖、自动止损止盈，每周日早上由自主研发的 TSE Self-Play 引擎驱动自我对弈进化，越跑越强。</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#evidence">看验证成绩单</a>
+      <a class="btn btn-ghost" href="#pricing">产品与价格</a>
+    </div>
+    <p class="tiny">黄金 + 外汇 · 三态自适应 · 样本外零过拟合验证</p>
+  </div>
+</div>
+
+<!-- ═══════════ 痛点 ═══════════ -->
+<section>
+  <div class="wrap">
+    <div class="sec-tag">WHY</div>
+    <h2>传统 EA 的三大谎言，我们不玩</h2>
+    <p class="lead">市面上的 EA 广告千篇一律：回测图全红、收益率几百倍、躺赚不亏钱。懂行的人都知道——那大多是过拟合 + 复利幻觉的数学把戏。</p>
+    <div class="grid">
+      <div class="card">
+        <h3>❌ 谎言一：回测全红</h3>
+        <p>把参数调到历史行情上完美拟合，换个时间段立刻失灵。我们用的是"留出验证"：最后 40% 的行情在训练时全程藏起来当考题，考过了才算数。</p>
+      </div>
+      <div class="card">
+        <h3>❌ 谎言二：收益率几百倍</h3>
+        <p>动态复利按数学上限滚出来的数字，实盘根本达不到。我们给的是去复利口径——固定手数一笔赚多少，这才是真本事。</p>
+      </div>
+      <div class="card">
+        <h3>❌ 谎言三：躺赚不亏</h3>
+        <p>没有不亏钱的系统。我们给的是完整的保命闸：连亏熔断、日亏保护、回撤熔断、新闻避险——亏了怎么被拦住，全部透明。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 成绩单 ═══════════ -->
+<section id="evidence">
+  <div class="wrap">
+    <div class="sec-tag">EVIDENCE</div>
+    <h2>验证成绩单：专业级防过拟合</h2>
+    <p class="lead">15.5 个月真实历史数据（实盘点差 + 滑点）。三项独立验证，全部通过——这是市场上 99% 的 EA 拿不出来的东西。</p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>去复利验证（固定手数）</h3>
+        <div class="big">$5.94<span style="font-size:16px;color:var(--muted)"> /笔</span></div>
+        <p style="margin-top:8px">2,433 笔 · 胜率 61.7% · 盈亏比 2.44<br>去掉复利滚仓，固定 0.02 手仍有稳定正期望 —— 真 alpha，不是数学幻觉。</p>
+      </div>
+      <div class="card">
+        <h3>样本外验证（零过拟合）</h3>
+        <div class="big cyan">61.8%</div>
+        <p style="margin-top:8px">977 笔 · 与训练期 61.5% 几乎一致<br>后 40% 全新行情参数零改动 —— 没见过的行情照样能赚。</p>
+      </div>
+      <div class="card">
+        <h3>成本压力 1.5 倍（极限测试）</h3>
+        <div class="big gold">$22.73<span style="font-size:16px;color:var(--muted)"> /笔</span></div>
+        <p style="margin-top:8px">点差拉高 1.5 倍 + 滑点 8 后：胜率 59.4%，回撤仅 10.5% —— 抗压。</p>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>品种</th><th>笔数</th><th>胜率</th><th>盈亏比</th><th>期望 $/笔</th><th>最大回撤</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>黄金 GOLD_</td><td class="num">2,433</td><td class="num">61.7%</td><td class="num">1.54</td><td class="num">$27.22</td><td class="num ok">6.2%</td></tr>
+        <tr><td>EURUSD</td><td class="num">2,447</td><td class="num">58.6%</td><td class="num">1.50</td><td class="num">$12.06</td><td class="num ok">8.1%</td></tr>
+        <tr><td>GBPUSD</td><td class="num">2,359</td><td class="num">59.6%</td><td class="num">1.60</td><td class="num">$17.86</td><td class="num ok">11.0%</td></tr>
+        <tr><td>USDJPY</td><td class="num">2,288</td><td class="num">58.0%</td><td class="num">1.68</td><td class="num">$13.59</td><td class="num ok">9.6%</td></tr>
+      </tbody>
+    </table>
+    <p class="note">※ 回测口径，实盘通常打 3–5 折。任何宣称"回测=实盘"的 EA 广告，都是骗子。</p>
+  </div>
+</section>
+
+<!-- ═══════════ 三把刀 ═══════════ -->
+<section>
+  <div class="wrap">
+    <div class="sec-tag">CORE</div>
+    <h2>一台机器，三把刀：按行情自动换打法</h2>
+    <p class="lead">传统策略"一把刀打天下"，行情一变就挨打。V23 用 H1 ADX 唯一裁判识别市场状态，自动轮换三套打法——这是 TSE 三态引擎的核心。</p>
+    <div class="grid">
+      <div class="card">
+        <h3>⚔️ 震荡刀</h3>
+        <p><b>行情：</b>ADX ≤ 22（箱体震荡）<br><b>打法：</b>通道边界弹球，低买高卖均值回归<br><b>出场：</b>固定止盈 + 移动跟踪让利润奔跑 + 时间止损</p>
+      </div>
+      <div class="card">
+        <h3>🚫 灰区：空仓围观</h3>
+        <p><b>行情：</b>22 &lt; ADX &lt; 28（方向不明）<br><b>打法：</b><b style="color:var(--green)">不交易</b>。行情打架的时候不接刀——这是整个系统最重要的保护。</p>
+      </div>
+      <div class="card">
+        <h3>🗡️ 趋势刀</h3>
+        <p><b>行情：</b>ADX ≥ 28（单边趋势）<br><b>打法：</b>SMC 结构突破 + 回踩订单块（OB）进场<br><b>出场：</b>盈利后保本 + 2×ATR 移动跟踪，让大趋势吃满</p>
+      </div>
+    </div>
+    <p class="note">每笔单子自动打上"行情状态 + 强度"标签，入场逻辑全程可审计。</p>
+  </div>
+</section>
+
+<!-- ═══════════ 进化机制 ═══════════ -->
+<section>
+  <div class="wrap">
+    <div class="sec-tag">EVOLUTION</div>
+    <h2>每周日早上，系统自己进化一次</h2>
+    <p class="lead">这是 V23 最特别的地方——不是"装好就不管"，而是由自主研发的 TSE Self-Play 引擎驱动，持续自我对弈、优胜劣汰。</p>
+    <div class="steps">
+      <div class="step">
+        <div class="n"></div>
+        <div><h3>训练直觉模型</h3><p>用攒下来的对弈数据训练一个"直觉网络"，快速判断哪套打法在当下行情有戏。</p></div>
+      </div>
+      <div class="step">
+        <div class="n"></div>
+        <div><h3>全品种自我对弈</h3><p>变异出一批候选打法，让它们在历史行情里互相对打，留下赢家（11 品种并行）。</p></div>
+      </div>
+      <div class="step">
+        <div class="n"></div>
+        <div><h3>双闸晋级</h3><p>训练提升 &gt; 0 <b>且</b> 通过未来考试 → 才准换参数。任何一个不达标，一律不采纳。</p></div>
+      </div>
+      <div class="step">
+        <div class="n"></div>
+        <div><h3>安全落地</h3><p>落地前备份 → 引擎加载测试 → 重启 → 健康检查。起不来自动回滚到上一版。</p></div>
+      </div>
+      <div class="step">
+        <div class="n"></div>
+        <div><h3>收割实盘证据</h3><p>把真实成交数据收回来，变成下一轮进化的养料——数据越攒越多，系统越来越懂行情。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 保命闸 ═══════════ -->
+<section>
+  <div class="wrap">
+    <div class="sec-tag">SAFETY</div>
+    <h2>五道保命闸：亏了怎么被拦住</h2>
+    <div class="guard-grid">
+      <div class="guard">
+        <h4>🔒 连亏熔断</h4>
+        <p>连亏 4 笔 → 暂停交易，不许再开。</p>
+      </div>
+      <div class="guard">
+        <h4>🔒 日亏保护</h4>
+        <p>当天亏到账户 15% → 收手，第二天再说。</p>
+      </div>
+      <div class="guard">
+        <h4>🔒 敞口硬闸</h4>
+        <p>总仓位不超过余额的 5 倍，永不重仓豪赌。</p>
+      </div>
+      <div class="guard">
+        <h4>🔒 回撤熔断</h4>
+        <p>账户从高点回撤超阈值 → 全部冻结，查清原因才恢复。</p>
+      </div>
+      <div class="guard">
+        <h4>🔒 新闻避险</h4>
+        <p>重大数据/黑天鹅前不开仓；战争类新闻 → 全部平仓 + 暂停 30 分钟。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 价格 ═══════════ -->
+<section id="pricing">
+  <div class="wrap">
+    <div class="sec-tag">OFFER</div>
+    <h2>怎么拥有它</h2>
+    <div class="pricing">
+      <div class="plan">
+        <h3>信号订阅</h3>
+        <div class="price">¥3,980<span> / 月</span></div>
+        <ul>
+          <li>每日实时交易信号推送</li>
+          <li>每周进化日报 + 赛马成绩单</li>
+          <li>持仓状态实时查看</li>
+          <li>风控闸门运行报告</li>
+        </ul>
+        <a class="btn btn-ghost" href="#contact">了解详情</a>
+      </div>
+      <div class="plan hot">
+        <span class="tag">推荐</span>
+        <h3>系统授权（源码级）</h3>
+        <div class="price">面议<span> / 一次性</span></div>
+        <ul>
+          <li>完整源码 + 一键部署包</li>
+          <li>11 品种全策略 + 进化引擎</li>
+          <li>部署教学 + 文档培训</li>
+          <li>支持本地独立运行</li>
+        </ul>
+        <a class="btn btn-primary" href="#contact">预约演示</a>
+      </div>
+    </div>
+    <p class="note">※ 面向懂行的个人交易者与量化工作室。实盘验证周期与第三方审计报告可随演示提供。</p>
+  </div>
+</section>
+
+<!-- ═══════════ 联系 ═══════════ -->
+<section id="contact" style="padding: 64px 0; text-align: center; border-bottom: 1px solid var(--line);">
+  <div class="wrap">
+    <h2 style="font-size: 28px;">预约演示 / 商务合作</h2>
+    <p style="color: var(--muted); margin-top: 12px;">金骏寰宇资本 · <a href="mailto:longhuaxianfengtan@163.com" style="color: var(--cyan);">longhuaxianfengtan@163.com</a></p>
+    <p style="color: var(--muted); margin-top: 6px; font-size: 13px;">工作日 24 小时内响应 · 完整验证报告可应要求提供</p>
+  </div>
+</section>
+
+<!-- ═══════════ 免责 ═══════════ -->
+<div class="disclaimer">
+  <div class="wrap">
+    <p><b>风险声明：</b>本页面所有回测数据均基于历史行情（15.5 个月真实数据，含实盘点差滑点），不代表未来收益。外汇与贵金属交易存在高风险，可能损失全部本金。过往表现不构成任何收益承诺。请务必使用模拟账户验证后再做决策。</p>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    © 2026 金骏寰宇资本 · V23 智能进化交易系统 · 技术文档与验证报告可应要求提供
+  </div>
+</footer>
+
+</body>
+</html>
